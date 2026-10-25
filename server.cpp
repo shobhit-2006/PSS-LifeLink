@@ -5,6 +5,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <mysql/mysql.h>
+#include <stdexcept>
 #include <algorithm>
 #include <cctype>
 #include <cstdlib>
@@ -24,7 +25,7 @@ string esc(MYSQL* db,const string&s){vector<char>b(s.size()*2+1);unsigned long n
 string getv(MYSQL_ROW row,unsigned int i){return row[i]?row[i]:"";}
 struct DB {
  MYSQL* c=nullptr;
- DB(){c=mysql_init(nullptr);if(!c)throw runtime_error("mysql_init failed");const char*h=getenv("MYSQLHOST");if(!h)h=getenv("PSS_DB_HOST");if(!h)h="127.0.0.1";const char*u=getenv("MYSQLUSER");if(!u)u=getenv("PSS_DB_USER");if(!u)u="root";const char*p=getenv("MYSQLPASSWORD");if(!p)p=getenv("PSS_DB_PASSWORD");if(!p)p="";const char*d=getenv("MYSQLDATABASE");if(!d)d="pss_lifelink";const char*ps=getenv("MYSQLPORT");unsigned int port=ps?(unsigned int)atoi(ps):3306;if(!mysql_real_connect(c,h,u,p,d,port,nullptr,0)){string e=mysql_error(c);mysql_close(c);c=nullptr;throw runtime_error("MySQL connection failed: "+e);} }
+ DB(){c=mysql_init(nullptr);if(!c)throw runtime_error("mysql_init failed");const char*h=getenv("MYSQLHOST");if(!h)h=getenv("PSS_DB_HOST");if(!h)h="127.0.0.1";const char*u=getenv("MYSQLUSER");if(!u)u=getenv("PSS_DB_USER");if(!u)u="root";const char*p=getenv("MYSQLPASSWORD");if(!p)p=getenv("PSS_DB_PASSWORD");if(!p)p="";const char*d=getenv("MYSQLDATABASE");if(!d)d="pss_lifelink";const char*ps=getenv("MYSQLPORT");unsigned int port=ps?(unsigned int)atoi(ps):3306;mysql_ssl_set(c,nullptr,nullptr,nullptr,nullptr,nullptr);if(!mysql_real_connect(c,h,u,p,d,port,nullptr,0)){string e=mysql_error(c);mysql_close(c);c=nullptr;throw runtime_error("MySQL connection failed: "+e);} }
  ~DB(){if(c)mysql_close(c);}
  string search(string type,string value,string city){if(value.empty())return "{\"ok\":false,\"message\":\"Please enter a search value.\",\"results\":[]}";string v=esc(c,value),ct=esc(c,city),sql;
  const string fields="h.hospital_ID,h.name AS hospital_name,h.city,h.address,h.authorization_status,h.phone,h.email,";
