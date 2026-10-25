@@ -49,21 +49,30 @@ Users can search using a Hospital ID and view the corresponding hospital informa
 - Store blood group information and available quantities.
 - Search for blood bank details associated with a hospital.
 
-  
 🛠️ Technologies Used
 
-Technology| Purpose
-C++| Application logic and backend development
-Object-Oriented Programming| Classes, objects and code organization
-MySQL| Database storage and queries
-MySQL Connector/C++| Connecting C++ applications to MySQL
-HTML| Website structure and user interface
-GitHub| Source code hosting and version control
-Docker| Backend packaging and deployment configuration
-Render | Website hosting
-Aiven MYSQL | Online MySQL hosting
----
+1. Programming Languages
 
+- C++  | Used for application logic and backend development.
+- HTML | Used to create the structure and user interface of the website.
+- SQL  | Used to create database tables, insert data, and retrieve information.
+
+2. Database & Connectivity
+
+- MySQL | A relational database management system used to store hospital, organ availability, and blood group details.
+- MySQL Connector/C++ | A library used to connect the C++ application to the MySQL database.
+
+3. Software & Development Tools
+
+- Visual Studio Code Insiders | A code editor used to write, edit, and manage the C++ source code.
+- MySQL Workbench | A graphical tool used to create and manage databases, execute SQL queries, and manage database records.
+
+4. Platforms & Deployment Tools
+
+- GitHub | Used for source code hosting and version control.
+- Docker | Used to package the application and its dependencies into containers for deployment.
+- Render | A cloud platform used to host web applications and backend services.
+- Aiven  | A cloud platform that provides managed MySQL database hosting.
 
 🗄️ Database Overview
 
