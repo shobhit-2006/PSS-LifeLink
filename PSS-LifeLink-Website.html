@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-[#07070a]">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
   <style>
     :root {
       --bg: #07070a;
-      --bg-elev: #0d0d12;
+      --bg-elev: #0e0e14;
       --fg: #f4f4f7;
       --fg-muted: #8e8ea0;
       --fg-dim: #545468;
@@ -37,10 +37,66 @@
       --radius-md: 14px;
       --radius-lg: 24px;
       --radius-pill: 9999px;
+
+      /* Dynamic Theme Variables */
+      --glass-bg: rgba(14, 14, 20, 0.72);
+      --glass-border: rgba(255, 255, 255, 0.09);
+      --card-bg: rgba(14, 14, 20, 0.65);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --input-bg: rgba(255, 255, 255, 0.04);
+      --input-border: rgba(255, 255, 255, 0.12);
+      --pill-bg: rgba(255, 255, 255, 0.04);
+      --pill-hover-bg: rgba(255, 255, 255, 0.09);
+      --text-grad: linear-gradient(135deg, #ffffff 40%, #8e8ea0 100%);
+      --grid-mesh-color: rgba(255, 255, 255, 0.04);
+      --torch-glow: radial-gradient(circle, rgba(255, 32, 86, 0.075) 0%, rgba(37, 99, 235, 0.04) 40%, transparent 70%);
+      --spot-border-grad: rgba(255, 255, 255, 0.45);
+      --strip-bg: rgba(0, 0, 0, 0.5);
+      --logo-rect-bg: #0d0d14;
+      --nav-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.85);
+      --watermark-opacity: 0.035;
+      --sub-pill-active-bg: #ffffff;
+      --sub-pill-active-fg: #07070a;
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-elev: #ffffff;
+      --fg: #0f172a;
+      --fg-muted: #64748b;
+      --fg-dim: #94a3b8;
+      --line: rgba(0, 0, 0, 0.08);
+      --line-strong: rgba(0, 0, 0, 0.14);
+
+      --brand: #e11d48;
+      --brand-glow: rgba(225, 29, 72, 0.25);
+      --brand-blue: #1d4ed8;
+      --brand-purple: #7c3aed;
+      --emerald: #059669;
+      --amber: #d97706;
+
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(0, 0, 0, 0.08);
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-border: rgba(0, 0, 0, 0.08);
+      --input-bg: rgba(241, 245, 249, 0.85);
+      --input-border: rgba(0, 0, 0, 0.12);
+      --pill-bg: rgba(0, 0, 0, 0.04);
+      --pill-hover-bg: rgba(0, 0, 0, 0.08);
+      --text-grad: linear-gradient(135deg, #0f172a 40%, #475569 100%);
+      --grid-mesh-color: rgba(0, 0, 0, 0.04);
+      --torch-glow: radial-gradient(circle, rgba(225, 29, 72, 0.05) 0%, rgba(37, 99, 235, 0.03) 40%, transparent 70%);
+      --spot-border-grad: rgba(225, 29, 72, 0.4);
+      --strip-bg: rgba(0, 0, 0, 0.03);
+      --logo-rect-bg: #ffffff;
+      --nav-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.1);
+      --watermark-opacity: 0.04;
+      --sub-pill-active-bg: #0f172a;
+      --sub-pill-active-fg: #ffffff;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; background: var(--bg); color: var(--fg); }
+    html { scroll-behavior: smooth; background: var(--bg); color: var(--fg); transition: background-color 0.3s ease, color 0.3s ease; }
     body {
       font-family: var(--font-sans);
       background-color: var(--bg);
@@ -49,6 +105,7 @@
       overflow-x: hidden;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     ::selection { background: var(--brand); color: #fff; }
 
@@ -70,8 +127,8 @@
       pointer-events: none;
       opacity: 0.35;
       background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+        linear-gradient(var(--grid-mesh-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-mesh-color) 1px, transparent 1px);
       background-size: 72px 72px;
       mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000, transparent);
       -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000, transparent);
@@ -84,9 +141,30 @@
       inset: 0;
       pointer-events: none;
       z-index: 80;
-      opacity: 0.06;
+      opacity: 0.05;
       mix-blend-mode: overlay;
       background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+      transition: opacity 0.3s;
+    }
+    [data-theme="light"] .noise-overlay {
+      opacity: 0.02;
+    }
+
+    /* LIVE EFFECT 3: Ambient Page-Wide Cursor Torch Follower */
+    #cursorTorch {
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: var(--torch-glow);
+      transform: translate(-50%, -50%);
+      transition: width 0.3s, height 0.3s;
+      z-index: 2;
+      mix-blend-mode: screen;
+    }
+    [data-theme="light"] #cursorTorch {
+      mix-blend-mode: multiply;
     }
 
     /* Interactive Canvas Background */
@@ -102,10 +180,11 @@
 
     /* Glass Effect Utility */
     .glass {
-      background: rgba(14, 14, 20, 0.65);
+      background: var(--glass-bg);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--line);
+      border: 1px solid var(--glass-border);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
     /* Typography Classes */
@@ -119,7 +198,7 @@
       color: var(--fg-muted);
     }
     .text-gradient {
-      background: linear-gradient(135deg, #ffffff 40%, #8e8ea0 100%);
+      background: var(--text-grad);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -142,42 +221,132 @@
     }
     .nav-bar {
       width: 100%;
-      max-width: 1160px;
+      max-width: 1180px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
       padding: 7px 10px 7px 18px;
       border-radius: var(--radius-pill);
-      box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.85);
+      box-shadow: var(--nav-shadow);
       transition: all 0.3s;
     }
     .nav-brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       text-decoration: none;
       color: var(--fg);
+      position: relative;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .nav-logo-box {
-      width: 26px;
-      height: 26px;
-      border-radius: 7px;
-      background: var(--grad-brand);
-      display: grid;
-      place-items: center;
-      color: #fff;
-      font-size: 13px;
-      font-weight: 800;
-      box-shadow: 0 0 16px var(--brand-glow);
+    .nav-brand:hover {
+      transform: translateY(-1px);
     }
-    .nav-brand-text {
+    .pss-logo-badge {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .pss-logo-glow {
+      position: absolute;
+      inset: -3px;
+      border-radius: 12px;
+      background: radial-gradient(circle, rgba(255, 32, 86, 0.45) 0%, rgba(139, 92, 246, 0.25) 50%, transparent 75%);
+      filter: blur(6px);
+      z-index: 0;
+      opacity: 0.7;
+      animation: logoPulse 3s ease-in-out infinite alternate;
+    }
+    @keyframes logoPulse {
+      0% { opacity: 0.45; transform: scale(0.95); }
+      100% { opacity: 0.85; transform: scale(1.05); }
+    }
+    .pss-logo-svg {
+      position: relative;
+      z-index: 1;
+      width: 36px;
+      height: 36px;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+    }
+    .brand-text-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 1;
+    }
+    .brand-primary {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .brand-pss-title {
       font-family: var(--font-display);
-      font-size: 16px;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--fg);
+      text-shadow: 0 0 14px var(--line-strong);
+    }
+    .brand-lifelink-title {
+      font-family: var(--font-display);
+      font-size: 15px;
       font-weight: 700;
+      background: var(--grad-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       letter-spacing: -0.3px;
     }
-    .nav-brand-text span { color: var(--brand); }
+    .brand-dot {
+      color: var(--brand);
+      font-weight: 900;
+    }
+    .brand-sub {
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-top: 3px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .brand-sub::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 6px var(--emerald);
+    }
+
+    /* LIVE EFFECT 1: Real-Time Header ECG Heartbeat Monitor Line */
+    .ecg-mini-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 8px;
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+    }
+    #headerEcgCanvas {
+      width: 90px;
+      height: 22px;
+    }
+    .ecg-bpm-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--brand);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
 
     .nav-links {
       display: flex;
@@ -196,12 +365,12 @@
     }
     .nav-link:hover {
       color: var(--fg);
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--pill-hover-bg);
     }
     .nav-link.active {
       color: var(--fg);
-      background: rgba(255, 255, 255, 0.09);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+      background: var(--pill-hover-bg);
+      box-shadow: inset 0 0 0 1px var(--line-strong);
     }
 
     .nav-actions {
@@ -216,7 +385,7 @@
       font-family: var(--font-mono);
       font-size: 11px;
       color: var(--fg-muted);
-      background: rgba(255, 255, 255, 0.03);
+      background: var(--pill-bg);
       border: 1px solid var(--line);
       padding: 4px 11px;
       border-radius: var(--radius-pill);
@@ -242,23 +411,24 @@
       75%, 100% { transform: scale(2.6); opacity: 0; }
     }
 
-    /* Sound Effects Toggle Button */
     .icon-toggle-btn {
-      background: rgba(255, 255, 255, 0.04);
+      background: var(--pill-bg);
       border: 1px solid var(--line);
       border-radius: var(--radius-pill);
-      padding: 4px 10px;
+      padding: 5px 10px;
       color: var(--fg-muted);
-      font-size: 12px;
+      font-size: 13px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 4px;
       transition: all 0.2s;
     }
     .icon-toggle-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--pill-hover-bg);
       color: var(--fg);
+      border-color: var(--line-strong);
     }
 
     .cmd-palette-btn {
@@ -303,11 +473,11 @@
     .hero {
       position: relative;
       z-index: 10;
-      min-height: 90vh;
+      min-height: 88vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 130px 24px 40px;
+      padding: 130px 24px 30px;
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -425,124 +595,9 @@
       transform: scale(1.02);
       box-shadow: 0 0 38px rgba(255, 32, 86, 0.6);
     }
-    .btn-glass-subtle {
-      border: 1px solid var(--line-strong);
-      color: var(--fg);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 12px 22px;
-      border-radius: var(--radius-pill);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s;
-    }
-    .btn-glass-subtle:hover {
-      background: rgba(255, 255, 255, 0.08);
-    }
 
-    /* LIVE ELEMENT 1: Real-time Live Network Activity Ticker Strip */
-    .live-event-ticker {
-      max-width: 1200px;
-      margin: 10px auto 30px;
-      padding: 0 24px;
-      position: relative;
-      z-index: 10;
-    }
-    .live-event-box {
-      background: rgba(14, 14, 20, 0.7);
-      border: 1px solid var(--line-strong);
-      border-radius: var(--radius-pill);
-      padding: 9px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      font-size: 13px;
-    }
-    .live-event-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      overflow: hidden;
-    }
-    .live-tag {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 700;
-      background: rgba(255, 32, 86, 0.15);
-      border: 1px solid rgba(255, 32, 86, 0.35);
-      color: var(--brand);
-      padding: 2px 7px;
-      border-radius: var(--radius-pill);
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      white-space: nowrap;
-    }
-    .live-stream-msg {
-      color: var(--fg);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      transition: opacity 0.3s;
-    }
 
-    /* LIVE ELEMENT 2: Animated Metric Counters Bar */
-    .live-metrics-bar {
-      max-width: 1200px;
-      margin: 0 auto 50px;
-      padding: 0 24px;
-      position: relative;
-      z-index: 10;
-    }
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-    .metric-card {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      padding: 18px 22px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .metric-card:hover {
-      border-color: var(--line-strong);
-      transform: translateY(-2px);
-    }
-    .metric-top-label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--fg-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-    }
-    .metric-val {
-      font-family: var(--font-display);
-      font-size: 34px;
-      font-weight: 800;
-      color: #ffffff;
-      margin: 8px 0 2px;
-      letter-spacing: -0.03em;
-    }
-    .metric-footnote {
-      font-size: 12px;
-      color: var(--emerald);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
+
 
     /* Infinite Marquee Strip */
     .marquee-section {
@@ -583,7 +638,7 @@
       gap: 10px;
       padding: 8px 18px;
       border-radius: var(--radius-pill);
-      background: rgba(255, 255, 255, 0.025);
+      background: var(--pill-bg);
       border: 1px solid var(--line);
       font-size: 13px;
       font-weight: 600;
@@ -603,14 +658,16 @@
       background: var(--brand);
     }
 
-    /* SpotlightCard Implementation (Dual-Layer Radial Border + Glow Mask) */
+    /* LIVE EFFECT 2: 3D Gyroscopic Card Tilt + Dual Spotlight */
     .spotlight-card {
       position: relative;
-      background: rgba(255, 255, 255, 0.025);
+      background: var(--card-bg);
       border-radius: 24px;
-      border: 1px solid var(--line);
+      border: 1px solid var(--card-border);
       overflow: hidden;
-      transition: border-color 0.4s;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      transition: border-color 0.3s, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s;
     }
     .spotlight-card .spot-glow {
       pointer-events: none;
@@ -618,7 +675,7 @@
       inset: 0;
       opacity: 0;
       transition: opacity 0.5s;
-      background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 32, 86, 0.16), transparent 45%);
+      background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), var(--brand-glow), transparent 45%);
       z-index: 0;
     }
     .spotlight-card .spot-border {
@@ -629,7 +686,7 @@
       padding: 1px;
       opacity: 0;
       transition: opacity 0.5s;
-      background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.45), transparent 50%);
+      background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), var(--spot-border-grad), transparent 50%);
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
@@ -647,7 +704,7 @@
     /* Omni Search Section */
     .search-section-wrap {
       max-width: 1200px;
-      margin: 0 auto 80px;
+      margin: 0 auto 70px;
       padding: 0 24px;
       position: relative;
       z-index: 10;
@@ -655,7 +712,10 @@
     .search-panel {
       padding: 34px;
       border-radius: var(--radius-lg);
-      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.85);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--nav-shadow);
+      transition: background-color 0.3s, border-color 0.3s;
     }
     .search-tabs-row {
       display: flex;
@@ -682,13 +742,13 @@
     }
     .search-tab-pill:hover {
       color: var(--fg);
-      background: rgba(255, 255, 255, 0.04);
+      background: var(--pill-hover-bg);
     }
     .search-tab-pill.active {
       color: var(--fg);
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.16);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      background: var(--pill-hover-bg);
+      border-color: var(--line-strong);
+      box-shadow: inset 0 1px 0 var(--line-strong);
     }
 
     .sub-method-bar {
@@ -698,7 +758,7 @@
       margin-bottom: 20px;
     }
     .sub-pill-btn {
-      background: rgba(255, 255, 255, 0.03);
+      background: var(--pill-bg);
       border: 1px solid var(--line);
       border-radius: var(--radius-pill);
       padding: 5px 14px;
@@ -713,9 +773,9 @@
       border-color: var(--line-strong);
     }
     .sub-pill-btn.active {
-      background: var(--fg);
-      color: var(--bg);
-      border-color: var(--fg);
+      background: var(--sub-pill-active-bg);
+      color: var(--sub-pill-active-fg);
+      border-color: var(--sub-pill-active-bg);
     }
 
     .search-form-grid {
@@ -740,8 +800,8 @@
     .form-ctrl {
       width: 100%;
       height: 52px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--line);
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
       border-radius: var(--radius-sm);
       color: var(--fg);
       font-family: inherit;
@@ -752,12 +812,12 @@
     }
     .form-ctrl:focus {
       border-color: var(--brand);
-      background: rgba(255, 255, 255, 0.07);
+      background: var(--input-bg);
       box-shadow: 0 0 20px var(--brand-glow);
     }
     select.form-ctrl option {
-      background: #101016;
-      color: #fff;
+      background: var(--bg-elev);
+      color: var(--fg);
     }
     .btn-exec-search {
       height: 52px;
@@ -781,63 +841,6 @@
       transform: translateY(-1px);
       box-shadow: 0 12px 30px rgba(255, 32, 86, 0.6);
     }
-
-    .chips-fast-access {
-      margin-top: 22px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .fast-chip {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--line);
-      color: var(--fg-muted);
-      border-radius: var(--radius-pill);
-      padding: 4px 12px;
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .fast-chip:hover {
-      color: var(--fg);
-      border-color: rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.08);
-      transform: translateY(-1px);
-    }
-
-    /* LIVE ELEMENT 3: Live C++ Terminal / SQL Query Inspector Drawer */
-    .terminal-drawer {
-      margin-top: 20px;
-      background: #09090e;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      font-family: var(--font-mono);
-      font-size: 12px;
-    }
-    .terminal-header {
-      background: rgba(255, 255, 255, 0.03);
-      padding: 8px 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      color: var(--fg-dim);
-    }
-    .terminal-body {
-      padding: 12px 16px;
-      color: #94a3b8;
-      max-height: 120px;
-      overflow-y: auto;
-      line-height: 1.6;
-    }
-    .term-line-success { color: var(--emerald); }
-    .term-line-info { color: #60a5fa; }
-    .term-line-highlight { color: #f43f5e; }
 
     /* Results Showcase */
     .results-display-area {
@@ -881,6 +884,37 @@
       gap: 20px;
     }
 
+    /* LIVE EFFECT 6: Shimmer Skeleton Placeholder State */
+    .skeleton-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
+      min-height: 240px;
+    }
+    .skeleton-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, var(--line-strong), transparent);
+      transform: translateX(-100%);
+      animation: skeletonSweep 1.5s infinite;
+    }
+    @keyframes skeletonSweep {
+      100% { transform: translateX(100%); }
+    }
+    .skel-line {
+      height: 14px;
+      background: var(--pill-hover-bg);
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+    .skel-title { width: 65%; height: 22px; margin-bottom: 16px; }
+    .skel-sub { width: 45%; }
+    .skel-box { height: 50px; background: var(--pill-bg); border-radius: 8px; margin: 16px 0; }
+
     /* Result Card */
     .res-card {
       padding: 26px;
@@ -905,7 +939,7 @@
     .rc-mono-id {
       font-family: var(--font-mono);
       font-size: 11px;
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--pill-bg);
       border: 1px solid var(--line);
       padding: 3px 8px;
       border-radius: 6px;
@@ -934,7 +968,7 @@
     }
     
     .rc-resource-strip {
-      background: rgba(0, 0, 0, 0.5);
+      background: var(--strip-bg);
       border: 1px dashed var(--line-strong);
       border-radius: var(--radius-sm);
       padding: 12px 14px;
@@ -954,7 +988,7 @@
       align-items: center;
       font-size: 14px;
       font-weight: 700;
-      color: #ffffff;
+      color: var(--fg);
     }
 
     .rc-btns {
@@ -965,7 +999,7 @@
       gap: 8px;
     }
     .card-action-btn {
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--pill-bg);
       border: 1px solid var(--line);
       border-radius: var(--radius-sm);
       color: var(--fg);
@@ -981,7 +1015,7 @@
       transition: all 0.2s;
     }
     .card-action-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--pill-hover-bg);
       border-color: var(--line-strong);
     }
     .card-action-btn.call-primary {
@@ -993,7 +1027,7 @@
       box-shadow: 0 0 16px var(--brand-glow);
     }
 
-    /* LIVE ELEMENT 4: Interactive Live Blood Reserve Barometer */
+    /* Live Blood Reserve Barometer */
     .blood-barometer-wrap {
       max-width: 1200px;
       margin: 0 auto 90px;
@@ -1007,17 +1041,18 @@
       gap: 14px;
     }
     .barometer-card {
-      background: rgba(255, 255, 255, 0.025);
-      border: 1px solid var(--line);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
       border-radius: var(--radius-md);
       padding: 20px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s, background-color 0.3s;
+      transform-style: preserve-3d;
     }
     .barometer-card:hover {
       border-color: var(--brand);
       transform: translateY(-2px);
-      background: rgba(255, 32, 86, 0.04);
+      background: var(--pill-hover-bg);
     }
     .baro-top {
       display: flex;
@@ -1060,137 +1095,43 @@
       justify-content: space-between;
     }
 
-    /* Bento Grid Section */
-    .bento-section {
-      max-width: 1200px;
-      margin: 110px auto;
-      padding: 0 24px;
-      position: relative;
-      z-index: 10;
-    }
-    .section-num-row {
-      display: flex;
+
+    /* LIVE EFFECT 7: Floating "Instant SOS" Radar Button */
+    .sos-radar-btn {
+      position: fixed;
+      bottom: 26px;
+      left: 26px;
+      background: linear-gradient(135deg, #ff2056, #b91c1c);
+      color: #ffffff;
+      padding: 12px 22px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
+      gap: 8px;
+      z-index: 60;
+      box-shadow: 0 10px 30px rgba(255, 32, 86, 0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .bento-heading {
-      font-family: var(--font-display);
-      font-size: clamp(34px, 5.5vw, 68px);
-      font-weight: 700;
-      line-height: 1;
-      letter-spacing: -0.035em;
-      margin-bottom: 16px;
+    .sos-radar-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 40px rgba(255, 32, 86, 0.8);
     }
-    .bento-subtext {
-      color: var(--fg-muted);
-      font-size: 16px;
-      max-width: 580px;
-      margin-bottom: 44px;
-      line-height: 1.7;
-    }
-
-    .bento-matrix {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-    .b-col-2 { grid-column: span 2; }
-    .b-col-3 { grid-column: span 3; }
-    .b-col-4 { grid-column: span 4; }
-    .b-row-2 { grid-row: span 2; }
-
-    .bento-inner {
-      padding: 28px;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 20px;
-    }
-    .bento-icon-sq {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--line);
-      display: grid;
-      place-items: center;
-      font-size: 22px;
-    }
-    .bento-inner h3 {
-      font-family: var(--font-display);
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 8px;
-    }
-    .bento-inner p {
-      font-size: 14px;
-      color: var(--fg-muted);
-      line-height: 1.6;
-    }
-
-    /* Regional Vector Map */
-    .regional-map-container {
-      position: relative;
-      height: 100%;
-      min-height: 280px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 28px;
-    }
-    .map-svg-overlay {
+    .sos-ripple {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 70%;
-      height: 80%;
-      opacity: 0.85;
+      inset: 0;
+      border-radius: inherit;
+      border: 2px solid #ff2056;
+      animation: sosWave 2.4s infinite cubic-bezier(0, 0, 0.2, 1);
       pointer-events: none;
     }
-    .map-node {
-      cursor: pointer;
-      pointer-events: all;
-      transition: all 0.2s;
+    @keyframes sosWave {
+      0% { transform: scale(1); opacity: 0.9; }
+      100% { transform: scale(1.4, 1.8); opacity: 0; }
     }
-    .map-node:hover {
-      r: 8;
-      fill: var(--brand);
-      filter: drop-shadow(0 0 10px var(--brand));
-    }
-
-    /* Live Activity Stream Grid */
-    .activity-grid-wrap {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      padding: 24px 28px;
-      margin-top: 16px;
-    }
-    .activity-cell-matrix {
-      display: flex;
-      gap: 4px;
-      overflow-x: auto;
-      padding: 10px 0;
-    }
-    .activity-column {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .activity-cell {
-      width: 12px;
-      height: 12px;
-      border-radius: 3px;
-      background: rgba(255, 255, 255, 0.05);
-      transition: all 0.2s;
-    }
-    .activity-cell.active-1 { background: rgba(16, 185, 129, 0.3); }
-    .activity-cell.active-2 { background: rgba(16, 185, 129, 0.6); }
-    .activity-cell.active-3 { background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); }
-    .activity-cell.active-alert { background: var(--brand); box-shadow: 0 0 8px var(--brand-glow); }
 
     /* Command Palette (⌘K) Modal */
     .cmd-overlay {
@@ -1207,10 +1148,11 @@
     .cmd-box {
       width: 100%;
       max-width: 640px;
-      background: #0d0d14;
-      border: 1px solid var(--line-strong);
+      background: var(--bg-elev);
+      border: 1px solid var(--card-border);
       border-radius: var(--radius-lg);
-      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.95);
+      box-shadow: var(--nav-shadow);
+      color: var(--fg);
       overflow: hidden;
       animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -1229,7 +1171,7 @@
       width: 100%;
       background: transparent;
       border: none;
-      color: #fff;
+      color: var(--fg);
       font-size: 16px;
       outline: none;
       font-family: inherit;
@@ -1260,13 +1202,13 @@
       transition: all 0.15s;
     }
     .cmd-entry:hover, .cmd-entry.active-cmd {
-      background: rgba(255, 255, 255, 0.08);
-      color: #ffffff;
+      background: var(--pill-hover-bg);
+      color: var(--fg);
     }
     .cmd-kbd-tag {
       font-family: var(--font-mono);
       font-size: 11px;
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--pill-bg);
       padding: 2px 7px;
       border-radius: 4px;
       color: var(--fg-dim);
@@ -1307,12 +1249,12 @@
       align-items: center;
       gap: 16px;
       flex-wrap: wrap;
-      margin-bottom: 60px;
+      margin-bottom: 36px;
     }
     .footer-meta-cols {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 30px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 24px;
       border-top: 1px solid var(--line);
       padding: 36px 0;
     }
@@ -1325,7 +1267,8 @@
       font-weight: 800;
       line-height: 0.75;
       letter-spacing: -0.06em;
-      color: rgba(255, 255, 255, 0.025);
+      color: var(--fg);
+      opacity: var(--watermark-opacity);
       font-size: clamp(80px, 22vw, 340px);
       margin-top: 40px;
     }
@@ -1335,9 +1278,9 @@
       position: fixed;
       bottom: 24px;
       right: 24px;
-      background: #14141d;
+      background: var(--bg-elev);
       border: 1px solid var(--line-strong);
-      color: #fff;
+      color: var(--fg);
       padding: 12px 22px;
       border-radius: var(--radius-sm);
       font-size: 13px;
@@ -1357,12 +1300,10 @@
     @media (max-width: 900px) {
       .nav-links { display: none; }
       .hero-cols { grid-template-columns: 1fr; }
-      .metrics-grid { grid-template-columns: 1fr 1fr; }
       .barometer-grid { grid-template-columns: 1fr 1fr; }
       .search-form-grid { grid-template-columns: 1fr; }
-      .bento-matrix { grid-template-columns: 1fr; }
-      .b-col-2, .b-col-3, .b-col-4 { grid-column: span 1; }
       .footer-meta-cols { grid-template-columns: 1fr 1fr; }
+      .ecg-mini-wrap { display: none; }
     }
   </style>
 </head>
@@ -1376,21 +1317,64 @@
   <div class="bg-grid-mesh" aria-hidden="true"></div>
   <canvas id="ambientCanvas" aria-hidden="true"></canvas>
 
+  <!-- LIVE EFFECT 3: Cursor Torch Light -->
+  <div id="cursorTorch" aria-hidden="true"></div>
+
+  <!-- LIVE EFFECT 7: Floating Instant SOS Radar Trigger -->
+  <a href="tel:108" class="sos-radar-btn" title="Tap to call nearest trauma response">
+    <div class="sos-ripple"></div>
+    <span>🚨 EMERGENCY SOS 108</span>
+  </a>
+
   <!-- Floating Pill Navbar -->
   <header class="nav-wrapper">
     <nav class="nav-bar glass">
-      <a href="#home" class="nav-brand">
-        <div class="nav-logo-box">✚</div>
-        <div class="nav-brand-text">PSS LifeLink<span>.</span></div>
+      <a href="#home" class="nav-brand" aria-label="PSS LifeLink - Patient Safety System">
+        <div class="pss-logo-badge">
+          <div class="pss-logo-glow"></div>
+          <svg class="pss-logo-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="pssLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff2056" />
+                <stop offset="50%" stop-color="#8b5cf6" />
+                <stop offset="100%" stop-color="#00e5ff" />
+              </linearGradient>
+            </defs>
+            <rect x="2" y="2" width="32" height="32" rx="9" fill="#0d0d14" stroke="url(#pssLogoGrad)" stroke-width="1.6"/>
+            <line x1="18" y1="7" x2="18" y2="29" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="7" y1="18" x2="29" y2="18" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M8 18H11.5L14 11L17.5 25L21 13.5L23.5 18H28" stroke="url(#pssLogoGrad)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="17.5" cy="18" r="2" fill="#ffffff"/>
+          </svg>
+        </div>
+        <div class="brand-text-col">
+          <div class="brand-primary">
+            <span class="brand-pss-title">PSS</span>
+            <span class="brand-lifelink-title">LifeLink</span>
+            <span class="brand-dot">.</span>
+          </div>
+          <div class="brand-sub">Patient Safety System</div>
+        </div>
       </a>
+
+      <!-- LIVE EFFECT 1: Header Real-Time ECG Heartbeat Line -->
+      <div class="ecg-mini-wrap" title="Real-Time Hospital Telemetry Vitals">
+        <canvas id="headerEcgCanvas"></canvas>
+        <span class="ecg-bpm-tag" id="ecgBpm">72 BPM</span>
+      </div>
 
       <ul class="nav-links">
         <li><a href="#home" class="nav-link active">Home</a></li>
         <li><a href="#searchSection" class="nav-link">Search</a></li>
-        <li><a href="#barometerSection" class="nav-link">Reserves</a></li>
+        <li><a href="#barometerSection" class="nav-link">Blood Reserves</a></li>
       </ul>
 
       <div class="nav-actions">
+        <!-- Theme Toggle (Dark / Light) -->
+        <button type="button" class="icon-toggle-btn" id="themeToggleBtn" title="Toggle Light / Dark Theme" aria-label="Toggle Theme">
+          <span id="themeIcon">🌙</span>
+        </button>
+
         <!-- Audio Haptic Feedback Toggle -->
         <button type="button" class="icon-toggle-btn" id="soundToggleBtn" title="Toggle audio feedback">
           <span id="soundIcon">🔊</span>
@@ -1401,11 +1385,6 @@
           <span class="radar-dot"></span>
           <span id="liveClockDisplay">IST --:--:--</span>
         </span>
-
-        <!-- Command Palette Trigger Button -->
-        <button type="button" class="cmd-palette-btn" id="openCmdPaletteBtn" title="Press ⌘K or Ctrl+K to open">
-          <span>⌘</span><span>K</span>
-        </button>
 
         <!-- Emergency Dial Button -->
         <a href="tel:108" class="emergency-pill-btn">
@@ -1433,7 +1412,7 @@
       <div class="hero-cols">
         <div>
           <p class="hero-mission">
-            Emergency healthcare directory, organ compatibility matching, and blood bank reserves.
+            Emergency healthcare directory, verified organ donor registry, and live blood bank reserves.
           </p>
           <div class="hero-rotating-bar">
             <span class="bar-dash"></span>
@@ -1457,70 +1436,6 @@
       </div>
     </section>
 
-    <!-- LIVE ELEMENT 1: Live Incident & Network Event Stream Ticker -->
-    <section class="live-event-ticker" aria-label="Real-time Network Feed">
-      <div class="live-event-box">
-        <div class="live-event-left">
-          <span class="live-tag">
-            <span class="radar-dot"></span> LIVE DISPATCH
-          </span>
-          <span class="live-stream-msg" id="liveTickerStream">
-            Connecting to regional health network telemetry...
-          </span>
-        </div>
-        <span class="eyebrow" style="color:var(--emerald); white-space:nowrap;">● 6 Regional Hubs Online</span>
-      </div>
-    </section>
-
-    <!-- LIVE ELEMENT 2: Animated Metric Counters Bar -->
-    <section class="live-metrics-bar">
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-top-label">
-            <span>Verified Hospitals</span>
-            <span>🏥</span>
-          </div>
-          <div class="metric-val" id="cntHospitals">84</div>
-          <div class="metric-footnote">
-            <span>↑ 6 Major Cities</span>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-top-label">
-            <span>Blood Units Logged</span>
-            <span>🩸</span>
-          </div>
-          <div class="metric-val" id="cntBlood">492</div>
-          <div class="metric-footnote">
-            <span>● 5 Regional Blood Hubs</span>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-top-label">
-            <span>Organ Registrations</span>
-            <span>🫀</span>
-          </div>
-          <div class="metric-val" id="cntOrgans">18</div>
-          <div class="metric-footnote" style="color:#60a5fa;">
-            <span>★ Real-time Compatibility</span>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-top-label">
-            <span>C++ Query Latency</span>
-            <span>⚡</span>
-          </div>
-          <div class="metric-val" id="cntLatency">12ms</div>
-          <div class="metric-footnote">
-            <span>● Prepared Stored Procs</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Infinite Scrolling Marquee Strip -->
     <div class="marquee-section" aria-hidden="true">
       <div class="marquee-track">
@@ -1529,16 +1444,16 @@
         <div class="marquee-pill"><span class="marquee-dot"></span> Kidney Transplant Registry Live</div>
         <div class="marquee-pill"><span class="marquee-dot"></span> Apollo Hospital Bilaspur</div>
         <div class="marquee-pill"><span class="marquee-dot"></span> JLNH Research Center Bhilai</div>
-        <div class="marquee-pill"><span class="marquee-dot"></span> 108 Emergency Ambulance Dispatch</div>
+        <div class="marquee-pill"><span class="marquee-dot"></span> 108 Emergency Ambulance Network</div>
         <div class="marquee-pill"><span class="marquee-dot"></span> Liver Availability Matching</div>
         <div class="marquee-pill"><span class="marquee-dot"></span> Durg District Civil Hospital</div>
-        <!-- Duplicated for seamless loop -->
+        <!-- Duplicated for loop -->
         <div class="marquee-pill"><span class="marquee-dot"></span> AIIMS Raipur — Super Specialty</div>
         <div class="marquee-pill"><span class="marquee-dot"></span> CIMS Bilaspur — Regional Blood Bank</div>
         <div class="marquee-pill"><span class="marquee-dot"></span> Kidney Transplant Registry Live</div>
         <div class="marquee-pill"><span class="marquee-dot"></span> Apollo Hospital Bilaspur</div>
         <div class="marquee-pill"><span class="marquee-dot"></span> JLNH Research Center Bhilai</div>
-        <div class="marquee-pill"><span class="marquee-dot"></span> 108 Emergency Ambulance Dispatch</div>
+        <div class="marquee-pill"><span class="marquee-dot"></span> 108 Emergency Ambulance Network</div>
         <div class="marquee-pill"><span class="marquee-dot"></span> Liver Availability Matching</div>
         <div class="marquee-pill"><span class="marquee-dot"></span> Durg District Civil Hospital</div>
       </div>
@@ -1646,7 +1561,7 @@
       <div class="cards-waterfall" id="resultsGrid"></div>
     </section>
 
-    <!-- LIVE ELEMENT 4: Live Blood Reserve Barometer -->
+    <!-- Live Blood Reserve Barometer -->
     <section class="blood-barometer-wrap" id="barometerSection">
       <div class="section-num-row">
         <span class="eyebrow" style="color: var(--brand);">01</span>
@@ -1657,76 +1572,98 @@
       <p class="bento-subtext">Click any blood group below to instantly locate matching reserve stock across regional blood banks.</p>
 
       <div class="barometer-grid">
-        <div class="barometer-card" data-qtype="blood" data-qval="O+">
-          <div class="baro-top">
-            <span class="baro-group">O+</span>
-            <span class="baro-pct" style="color:#10b981;">78% Available</span>
-          </div>
-          <div class="baro-bar-track">
-            <div class="baro-bar-fill baro-fill-high" style="width: 78%;"></div>
-          </div>
-          <div class="baro-footer">
-            <span>184 Units</span>
-            <span>Healthy Stock</span>
-          </div>
-        </div>
-
-        <div class="barometer-card" data-qtype="blood" data-qval="B+">
-          <div class="baro-top">
-            <span class="baro-group">B+</span>
-            <span class="baro-pct" style="color:#3b82f6;">65% Available</span>
-          </div>
-          <div class="baro-bar-track">
-            <div class="baro-bar-fill baro-fill-med" style="width: 65%;"></div>
-          </div>
-          <div class="baro-footer">
-            <span>132 Units</span>
-            <span>Normal</span>
+        <div class="barometer-card spotlight-card" data-qtype="blood" data-qval="O+">
+          <div class="spot-glow"></div>
+          <div class="spot-border"></div>
+          <div class="card-content">
+            <div class="baro-top">
+              <span class="baro-group">O+</span>
+              <span class="baro-pct" style="color:#10b981;">78% Available</span>
+            </div>
+            <div class="baro-bar-track">
+              <div class="baro-bar-fill baro-fill-high" style="width: 78%;"></div>
+            </div>
+            <div class="baro-footer">
+              <span>184 Units</span>
+              <span>Healthy Stock</span>
+            </div>
           </div>
         </div>
 
-        <div class="barometer-card" data-qtype="blood" data-qval="A+">
-          <div class="baro-top">
-            <span class="baro-group">A+</span>
-            <span class="baro-pct" style="color:#3b82f6;">52% Available</span>
-          </div>
-          <div class="baro-bar-track">
-            <div class="baro-bar-fill baro-fill-med" style="width: 52%;"></div>
-          </div>
-          <div class="baro-footer">
-            <span>98 Units</span>
-            <span>Normal</span>
-          </div>
-        </div>
-
-        <div class="barometer-card" data-qtype="blood" data-qval="AB+">
-          <div class="baro-top">
-            <span class="baro-group">AB+</span>
-            <span class="baro-pct" style="color:#f59e0b;">38% Available</span>
-          </div>
-          <div class="baro-bar-track">
-            <div class="baro-bar-fill baro-fill-low" style="width: 38%;"></div>
-          </div>
-          <div class="baro-footer">
-            <span>56 Units</span>
-            <span>Moderate</span>
+        <div class="barometer-card spotlight-card" data-qtype="blood" data-qval="B+">
+          <div class="spot-glow"></div>
+          <div class="spot-border"></div>
+          <div class="card-content">
+            <div class="baro-top">
+              <span class="baro-group">B+</span>
+              <span class="baro-pct" style="color:#3b82f6;">65% Available</span>
+            </div>
+            <div class="baro-bar-track">
+              <div class="baro-bar-fill baro-fill-med" style="width: 65%;"></div>
+            </div>
+            <div class="baro-footer">
+              <span>132 Units</span>
+              <span>Normal</span>
+            </div>
           </div>
         </div>
 
-        <div class="barometer-card" data-qtype="blood" data-qval="O-">
-          <div class="baro-top">
-            <span class="baro-group" style="color:var(--brand);">O-</span>
-            <span class="baro-pct" style="color:var(--brand);">14% Critical</span>
-          </div>
-          <div class="baro-bar-track">
-            <div class="baro-bar-fill baro-fill-urgent" style="width: 14%;"></div>
-          </div>
-          <div class="baro-footer">
-            <span>22 Units</span>
-            <span>⚡ Urgent Need</span>
+        <div class="barometer-card spotlight-card" data-qtype="blood" data-qval="A+">
+          <div class="spot-glow"></div>
+          <div class="spot-border"></div>
+          <div class="card-content">
+            <div class="baro-top">
+              <span class="baro-group">A+</span>
+              <span class="baro-pct" style="color:#3b82f6;">52% Available</span>
+            </div>
+            <div class="baro-bar-track">
+              <div class="baro-bar-fill baro-fill-med" style="width: 52%;"></div>
+            </div>
+            <div class="baro-footer">
+              <span>98 Units</span>
+              <span>Normal</span>
+            </div>
           </div>
         </div>
+
+        <div class="barometer-card spotlight-card" data-qtype="blood" data-qval="AB+">
+          <div class="spot-glow"></div>
+          <div class="spot-border"></div>
+          <div class="card-content">
+            <div class="baro-top">
+              <span class="baro-group">AB+</span>
+              <span class="baro-pct" style="color:#f59e0b;">38% Available</span>
+            </div>
+            <div class="baro-bar-track">
+              <div class="baro-bar-fill baro-fill-low" style="width: 38%;"></div>
+            </div>
+            <div class="baro-footer">
+              <span>56 Units</span>
+              <span>Moderate</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="barometer-card spotlight-card" data-qtype="blood" data-qval="O-">
+          <div class="spot-glow"></div>
+          <div class="spot-border"></div>
+          <div class="card-content">
+            <div class="baro-top">
+              <span class="baro-group" style="color:var(--brand);">O-</span>
+              <span class="baro-pct" style="color:var(--brand);">14% Critical</span>
+            </div>
+            <div class="baro-bar-track">
+              <div class="baro-bar-fill baro-fill-urgent" style="width: 14%;"></div>
+            </div>
+            <div class="baro-footer">
+              <span>22 Units</span>
+              <span>⚡ Urgent Need</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
+
   </main>
 
   <!-- Command Palette Modal (⌘K) -->
@@ -1741,7 +1678,7 @@
       <ul class="cmd-results-list" id="cmdList">
         <li class="cmd-group-title">Critical Emergency Hotlines</li>
         <li class="cmd-entry" data-action="tel:108">
-          <span>🚑 Ambulance Dispatch (National)</span>
+          <span>🚑 Ambulance Helpline (National)</span>
           <span class="cmd-kbd-tag">108</span>
         </li>
         <li class="cmd-entry" data-action="tel:104">
@@ -1815,11 +1752,28 @@
           <span>↗</span>
         </a>
         <p style="color:var(--fg-muted); font-size:14px; max-width:320px;">
-          24/7 centralized dispatch linking patient casualty calls with the closest available emergency trauma unit.
+          24/7 centralized emergency network linking patient casualty calls with the closest available emergency trauma unit.
         </p>
       </div>
 
       <div class="footer-meta-cols">
+        <div>
+          <p class="eyebrow" style="color:var(--brand);">Contact Us:</p>
+          <div style="margin-top: 10px; display:flex; flex-direction:column; gap:6px;">
+            <p class="font-mono" style="font-size: 14px; font-weight:600; margin:0;">
+              <a href="tel:7579715937" style="color:var(--fg); text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+                <span>📞</span>
+                <span>7579715937</span>
+              </a>
+            </p>
+            <p class="font-mono" style="font-size: 13.5px; margin:0;">
+              <a href="mailto:sho581796@gmail.com" style="color:var(--fg); text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+                <span>✉️</span>
+                <span>sho581796@gmail.com</span>
+              </a>
+            </p>
+          </div>
+        </div>
         <div>
           <p class="eyebrow">Local Time</p>
           <p class="font-mono" style="margin-top: 10px; font-size: 14px;" id="footerClock">IST --:--:--</p>
@@ -1833,7 +1787,7 @@
           <p class="font-mono" style="margin-top: 10px; font-size: 14px; color:var(--emerald);">PSS_LifeLink (MySQL)</p>
         </div>
         <div>
-          <p class="eyebrow">Hotlines</p>
+          <p class="eyebrow">Emergency Hotlines</p>
           <p style="margin-top: 10px; font-size: 14px;">
             <a href="tel:108" style="color:var(--fg); text-decoration:none;">108 (Ambulance)</a> · 
             <a href="tel:104" style="color:var(--fg); text-decoration:none;">104 (Blood)</a>
@@ -1841,8 +1795,8 @@
         </div>
       </div>
 
-      <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--line); padding-top:20px; font-family:var(--font-mono); font-size:11px; color:var(--fg-dim); flex-wrap:wrap; gap:10px;">
-        <p>© 2026 PSS LifeLink · Patient Safety System Prototype</p>
+      <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--line); padding-top:20px; font-family:var(--font-mono); font-size:12px; color:var(--fg-dim); flex-wrap:wrap; gap:12px;">
+        <p>© 2026 PSS LifeLink · Patient Safety System</p>
         <a href="#home" style="color:var(--fg-muted); text-decoration:none;">Back to top ↑</a>
       </div>
 
@@ -1857,7 +1811,7 @@
   <div class="toast-pill" id="toastPill">Notification</div>
 
   <script>
-    // --- Audio Haptic Synthesizer (Zero external dependencies) ---
+    // --- Audio Haptic Synthesizer ---
     let soundEnabled = true;
     const soundToggleBtn = document.getElementById('soundToggleBtn');
     const soundIcon = document.getElementById('soundIcon');
@@ -1887,7 +1841,117 @@
       showToast(soundEnabled ? 'Audio feedback enabled' : 'Audio muted');
     });
 
-    // --- 1. Ambient Constellation Particle Canvas ---
+    // --- Theme Controller (Dark / Light Theme) ---
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    
+    function getStoredTheme() {
+      const stored = localStorage.getItem('pss_theme');
+      if (stored) return stored;
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+
+    function applyTheme(theme, notify = false) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pss_theme', theme);
+      if (themeIcon) {
+        themeIcon.textContent = theme === 'light' ? '☀️' : '🌙';
+      }
+      if (notify) {
+        if (theme === 'light') {
+          playBeep(520, 0.04);
+          setTimeout(() => playBeep(780, 0.06), 40);
+        } else {
+          playBeep(780, 0.04);
+          setTimeout(() => playBeep(520, 0.06), 40);
+        }
+        showToast(theme === 'light' ? 'Light mode activated' : 'Dark mode activated');
+      }
+    }
+
+    // Initialize Theme immediately
+    applyTheme(getStoredTheme(), false);
+
+    themeToggleBtn?.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const target = current === 'dark' ? 'light' : 'dark';
+      applyTheme(target, true);
+    });
+
+    // --- LIVE EFFECT 3: Smooth Cursor Torch Follower ---
+    const cursorTorch = document.getElementById('cursorTorch');
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let torchX = mouseX;
+    let torchY = mouseY;
+
+    window.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animateTorch() {
+      // Smooth interpolation (lerp)
+      torchX += (mouseX - torchX) * 0.12;
+      torchY += (mouseY - torchY) * 0.12;
+      if (cursorTorch) {
+        cursorTorch.style.left = `${torchX}px`;
+        cursorTorch.style.top = `${torchY}px`;
+      }
+      requestAnimationFrame(animateTorch);
+    }
+    animateTorch();
+
+    // --- LIVE EFFECT 1: Header Real-Time ECG Heartbeat Line ---
+    const ecgCanvas = document.getElementById('headerEcgCanvas');
+    const ecgCtx = ecgCanvas ? ecgCanvas.getContext('2d') : null;
+    let ecgX = 0;
+    let ecgStep = 0;
+    const ecgWidth = 90;
+    const ecgHeight = 22;
+
+    if (ecgCanvas) {
+      ecgCanvas.width = ecgWidth;
+      ecgCanvas.height = ecgHeight;
+    }
+
+    function drawEcg() {
+      if (!ecgCtx) return;
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      // Fade previous trace slightly for phosphor trail
+      ecgCtx.fillStyle = isLight ? 'rgba(248, 250, 252, 0.3)' : 'rgba(14, 14, 20, 0.22)';
+      ecgCtx.fillRect(ecgX, 0, 4, ecgHeight);
+
+      ecgCtx.beginPath();
+      ecgCtx.strokeStyle = isLight ? '#e11d48' : '#ff2056';
+      ecgCtx.lineWidth = 1.5;
+      ecgCtx.shadowColor = isLight ? 'rgba(225, 29, 72, 0.4)' : '#ff2056';
+      ecgCtx.shadowBlur = isLight ? 2 : 4;
+
+      const midY = ecgHeight / 2;
+      let y = midY;
+
+      // Cardiogram P-Q-R-S-T spike pattern
+      const phase = ecgStep % 40;
+      if (phase === 15) y = midY - 3;      // P wave
+      else if (phase === 17) y = midY + 2; // Q dip
+      else if (phase === 18) y = midY - 9; // R peak
+      else if (phase === 19) y = midY + 8; // S dip
+      else if (phase === 22) y = midY - 4; // T wave
+      else y = midY + (Math.random() - 0.5) * 0.8;
+
+      ecgCtx.moveTo(ecgX, midY);
+      ecgCtx.lineTo(ecgX + 1, y);
+      ecgCtx.stroke();
+
+      ecgX = (ecgX + 1.2) % ecgWidth;
+      ecgStep++;
+
+      requestAnimationFrame(drawEcg);
+    }
+    if (ecgCtx) drawEcg();
+
+    // --- Ambient Constellation Particle Canvas ---
     const canvas = document.getElementById('ambientCanvas');
     const ctx = canvas.getContext('2d');
     let width, height;
@@ -1918,9 +1982,10 @@
         if (this.y > height) this.y = 0;
       }
       draw() {
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.28)';
+        ctx.fillStyle = isLight ? 'rgba(15, 23, 42, 0.16)' : 'rgba(255, 255, 255, 0.28)';
         ctx.fill();
       }
     }
@@ -1931,6 +1996,7 @@
 
     function animateParticles() {
       ctx.clearRect(0, 0, width, height);
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
         particles[i].draw();
@@ -1939,8 +2005,11 @@
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 120) {
+            const baseAlpha = 1 - dist / 120;
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(255, 255, 255, ${0.08 * (1 - dist / 120)})`;
+            ctx.strokeStyle = isLight 
+              ? `rgba(15, 23, 42, ${0.05 * baseAlpha})` 
+              : `rgba(255, 255, 255, ${0.08 * baseAlpha})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -1952,7 +2021,7 @@
     }
     animateParticles();
 
-    // --- 2. Dual-Layer Spotlight Engine ---
+    // --- LIVE EFFECT 2: 3D Gyroscopic Card Tilt + Dual Spotlight ---
     function initSpotlights() {
       const cards = document.querySelectorAll('.spotlight-card, .metric-card, .barometer-card');
       cards.forEach(card => {
@@ -1962,17 +2031,29 @@
           const y = e.clientY - rect.top;
           card.style.setProperty('--mx', `${x}px`);
           card.style.setProperty('--my', `${y}px`);
+
+          // 3D Tilt Angle calculation
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const tiltX = (y - centerY) / centerY * -6; // max 6 deg
+          const tiltY = (x - centerX) / centerX * 6;
+
+          card.style.transform = `perspective(1000px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) scale3d(1.015, 1.015, 1.015)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
         });
       });
     }
     initSpotlights();
 
-    // --- 3. Rotating Subtitle Ticker ---
+    // --- Rotating Subtitle Ticker ---
     const words = [
       "Emergency Hospital Network",
-      "Organ Compatibility Matcher",
+      "Organ Matching Registry",
       "Live Blood Bank Reserves",
-      "ICU Bed & Trauma Dispatch"
+      "ICU Beds & Trauma Centers"
     ];
     let wordIndex = 0;
     const flipper = document.getElementById('flipperText');
@@ -1992,7 +2073,7 @@
       }, 3000);
     }
 
-    // --- 4. Live Digital Clocks ---
+    // --- Live Digital Clocks ---
     function updateClocks() {
       const now = new Date();
       const options = { timeZone: 'Asia/Kolkata', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
@@ -2005,36 +2086,8 @@
     setInterval(updateClocks, 1000);
     updateClocks();
 
-    // --- 5. LIVE EVENT STREAM DISPATCH FEED ---
-    const eventFeed = [
-      "AIIMS Raipur: 4 units O+ blood logged to emergency reserves",
-      "Apollo Bilaspur: 1 Kidney donor registered & HLA pre-screened",
-      "CIMS Bilaspur: Blood Bank inventory updated (14 units active)",
-      "108 Ambulance Unit #42: Dispatched to Bhilai Sector 9 trauma center",
-      "JLNH Bhilai: 1 Liver registration linked to state recipient waitlist",
-      "District Civil Hospital Durg: Platelet Apheresis unit operational",
-      "Korba Super Specialty: Emergency ICU bed capacity cleared (8 available)",
-      "Raigarh Medical College: Cornea bank donor registration recorded"
-    ];
-    let eventIdx = 0;
-    const liveTicker = document.getElementById('liveTickerStream');
-    function updateLiveFeed() {
-      if (!liveTicker) return;
-      liveTicker.style.opacity = '0';
-      setTimeout(() => {
-        const now = new Date();
-        const timeStr = now.toLocaleTimeString('en-IN', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        liveTicker.textContent = `[${timeStr}] ${eventFeed[eventIdx]}`;
-        liveTicker.style.opacity = '1';
-        eventIdx = (eventIdx + 1) % eventFeed.length;
-      }, 300);
-    }
-    setInterval(updateLiveFeed, 4500);
-    updateLiveFeed();
 
-    function logToTerminal() {}
-
-    // --- 8. Command Palette (⌘K) Handlers ---
+    // --- Command Palette (⌘K) Handlers ---
     const cmdOverlay = document.getElementById('cmdOverlay');
     const openCmdBtn = document.getElementById('openCmdPaletteBtn');
     const closeCmdBtn = document.getElementById('closeCmdBtn');
@@ -2051,8 +2104,8 @@
       cmdOverlay.classList.remove('active');
     }
 
-    openCmdBtn.addEventListener('click', openCmd);
-    closeCmdBtn.addEventListener('click', closeCmd);
+    openCmdBtn?.addEventListener('click', openCmd);
+    closeCmdBtn?.addEventListener('click', closeCmd);
     cmdOverlay.addEventListener('click', e => {
       if (e.target === cmdOverlay) closeCmd();
     });
@@ -2094,7 +2147,7 @@
       }
     });
 
-    // --- 9. Search Form & Live Query Logic ---
+    // --- Search Form & Query Logic with LIVE SKELETON SHIMMER ---
     let currentCategory = 'hospital';
     let currentHospitalSub = 'city';
 
@@ -2216,15 +2269,40 @@
       }
     }
 
-    document.querySelectorAll('[data-qtype]').forEach(chip => {
-      chip.addEventListener('click', () => {
-        applySearchFilter(chip.dataset.qtype, chip.dataset.qval);
+    document.querySelectorAll('[data-qtype]').forEach(card => {
+      card.addEventListener('click', () => {
+        applySearchFilter(card.dataset.qtype, card.dataset.qval);
+        document.getElementById('searchSection')?.scrollIntoView({ behavior: 'smooth' });
       });
     });
 
     function escapeHtml(s) {
       if (!s) return '';
       return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    // LIVE EFFECT 6: Render Glowing Shimmer Skeletons
+    function showSkeletonLoading() {
+      resultsGrid.innerHTML = `
+        <div class="skeleton-card">
+          <div class="skel-line skel-title"></div>
+          <div class="skel-line skel-sub"></div>
+          <div class="skel-box"></div>
+          <div class="skel-line" style="width: 80%;"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skel-line skel-title"></div>
+          <div class="skel-line skel-sub"></div>
+          <div class="skel-box"></div>
+          <div class="skel-line" style="width: 80%;"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skel-line skel-title"></div>
+          <div class="skel-line skel-sub"></div>
+          <div class="skel-box"></div>
+          <div class="skel-line" style="width: 80%;"></div>
+        </div>
+      `;
     }
 
     function renderResults(records) {
@@ -2372,9 +2450,11 @@
     ];
 
     loadPreviewBtn.addEventListener('click', () => {
-      renderResults(previewData);
-      logToTerminal('OK', 'Sample preview rendered: 4 facilities loaded into DOM');
-      showToast('Loaded real interactive hospital cards!');
+      showSkeletonLoading();
+      setTimeout(() => {
+        renderResults(previewData);
+        showToast('Loaded real interactive hospital cards!');
+      }, 400);
     });
 
     async function runSearch() {
@@ -2400,28 +2480,27 @@
 
       statusBanner.className = 'status-box info';
       statusBanner.innerHTML = `<div><span class="radar-dot"></span> Searching PSS LifeLink live network...</div>`;
-      resultsGrid.innerHTML = '';
-
-      logToTerminal('EXEC', `CALL SearchProcedure: type=${type}, query="${q}"`);
+      showSkeletonLoading();
 
       try {
         const res = await fetch('/api/search?' + params.toString());
         const data = await res.json();
         if (!res.ok || !data.ok) throw new Error(data.message || 'Server error');
-        logToTerminal('OK', `Server returned ${data.results?.length || 0} rows in 14ms`);
         renderResults(data.results);
       } catch (err) {
-        logToTerminal('WARN', `Live endpoint unreachable (${err.message}). Demo fallback ready.`);
-        statusBanner.className = 'status-box warning';
-        statusBanner.innerHTML = `
-          <div>
-            <strong>Backend Offline:</strong> Could not connect to C++ backend (<em>${err.message}</em>).<br>
-            Click <strong>Load Live Preview</strong> to test the interface with sample data.
-          </div>
-          <button type="button" onclick="renderResults(previewData)" style="padding:6px 14px; background:var(--brand); color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer;">
-            Show Sample Data
-          </button>
-        `;
+        setTimeout(() => {
+          statusBanner.className = 'status-box warning';
+          statusBanner.innerHTML = `
+            <div>
+              <strong>Backend Offline:</strong> Could not connect to C++ backend (<em>${err.message}</em>).<br>
+              Click <strong>Load Live Preview</strong> to test the interface with sample data.
+            </div>
+            <button type="button" onclick="renderResults(previewData)" style="padding:6px 14px; background:var(--brand); color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer;">
+              Show Sample Data
+            </button>
+          `;
+          resultsGrid.innerHTML = '';
+        }, 350);
       }
     }
 
