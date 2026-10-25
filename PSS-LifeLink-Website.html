@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSS LifeLink | Hospital & Resource Finder</title>
+<style>
+:root{--navy:#102a56;--blue:#1769e0;--blue2:#3b82f6;--pale:#eef5ff;--teal:#0f9d91;--ink:#1d2b45;--muted:#66758d;--line:#e3eaf4;--white:#fff;--shadow:0 14px 40px rgba(26,64,120,.09)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:#f7faff}button,input,select{font:inherit}button,a{cursor:pointer}a{text-decoration:none;color:inherit}
+.topbar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}.nav{max-width:1180px;margin:auto;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:11px;font-weight:800;color:var(--navy);font-size:21px;letter-spacing:-.4px}.logo{height:42px;width:42px;border-radius:13px;background:linear-gradient(135deg,var(--blue),#5aa9ff);display:grid;place-items:center;color:#fff;font-size:24px;box-shadow:0 7px 16px #1769e033}.brand small{display:block;color:#71819a;font-size:10px;letter-spacing:1.8px;font-weight:700;margin-top:2px}.navlinks{display:flex;gap:26px;align-items:center;color:#4b5c75;font-size:14px;font-weight:600}.navlinks a:hover{color:var(--blue)}.nav-cta{border:0;background:var(--blue);color:#fff;padding:11px 17px;border-radius:10px;font-weight:700;box-shadow:0 7px 15px #1769e02b}
+.hero{background:radial-gradient(circle at 83% 18%,#dcecff 0,transparent 30%),linear-gradient(120deg,#f7fbff,#edf5ff);overflow:hidden}.hero-inner{max-width:1180px;margin:auto;padding:70px 24px 65px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:45px}.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#e0f6f2;color:#087b72;padding:8px 12px;border-radius:30px;font-size:12px;font-weight:800;letter-spacing:.5px}.dot{height:7px;width:7px;background:#11a99a;border-radius:50%}h1{font-size:clamp(38px,5vw,60px);line-height:1.07;letter-spacing:-2px;color:var(--navy);margin:20px 0 18px}h1 span{color:var(--blue)}.hero p{color:#62728b;font-size:17px;line-height:1.75;max-width:560px;margin:0 0 26px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap}.btn{border:0;border-radius:11px;padding:14px 19px;font-weight:750;display:inline-flex;align-items:center;justify-content:center;gap:9px}.btn-primary{background:var(--blue);color:#fff;box-shadow:0 9px 20px #1769e02c}.btn-secondary{background:#fff;color:var(--navy);border:1px solid #dce6f4}.hero-note{display:flex;gap:16px;align-items:center;margin-top:25px;color:#6b7a91;font-size:12px}.hero-note strong{color:#324563}.hero-art{position:relative;min-height:340px;display:grid;place-items:center}.medical-card{width:min(100%,420px);background:#fff;border:1px solid #e4edf9;border-radius:24px;padding:24px;box-shadow:0 25px 70px #315c9630;position:relative;z-index:2}.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.card-head h3{margin:0;color:var(--navy);font-size:17px}.status{font-size:11px;color:#0c8c7f;background:#e2f8f3;padding:7px 9px;border-radius:20px;font-weight:800}.resource-row{display:flex;align-items:center;gap:13px;padding:14px 0;border-bottom:1px solid #edf1f7}.resource-row:last-child{border:0}.res-icon{height:44px;width:44px;border-radius:13px;background:#eaf2ff;display:grid;place-items:center;font-size:22px}.res-icon.teal{background:#e1f7f3}.res-icon.purple{background:#f0eaff}.res-copy{flex:1}.res-copy b{display:block;font-size:14px;color:#263b5c}.res-copy span{font-size:12px;color:#7a899e;display:block;margin-top:4px}.res-arrow{font-size:20px;color:#8aa0be}.float-bubble{position:absolute;background:white;border:1px solid #e5edf8;box-shadow:var(--shadow);border-radius:16px;padding:13px 16px;z-index:3;font-size:12px;color:#6c7b91}.float-bubble strong{display:block;font-size:17px;color:var(--navy);margin-bottom:3px}.bubble-one{top:5px;right:0}.bubble-two{bottom:4px;left:-5px}.orb{position:absolute;width:280px;height:280px;border-radius:50%;background:#dbeaff;right:4%;top:10%;opacity:.7}
+.stats{max-width:1180px;margin:-1px auto 0;padding:0 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;position:relative}.stat{background:#fff;border:1px solid var(--line);border-radius:15px;padding:20px 22px;display:flex;gap:14px;align-items:center}.stat-icon{width:43px;height:43px;border-radius:12px;background:var(--pale);display:grid;place-items:center;font-size:21px}.stat strong{display:block;color:var(--navy);font-size:19px}.stat span{font-size:12px;color:var(--muted);display:block;margin-top:4px}
+.section{max-width:1180px;margin:auto;padding:72px 24px}.section-top{text-align:center;max-width:650px;margin:0 auto 32px}.section-top .eyebrow{margin-bottom:13px}.section h2{font-size:clamp(28px,3vw,38px);letter-spacing:-1px;color:var(--navy);margin:8px 0 12px}.section-top p{color:var(--muted);line-height:1.7;margin:0}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.feature{background:#fff;border:1px solid var(--line);border-radius:18px;padding:25px;box-shadow:0 8px 25px #234a8010;transition:.2s}.feature:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.feature-icon{height:54px;width:54px;border-radius:15px;display:grid;place-items:center;font-size:26px;background:#e9f1ff;margin-bottom:19px}.feature:nth-child(2) .feature-icon{background:#e0f7f2}.feature:nth-child(3) .feature-icon{background:#f0eaff}.feature h3{margin:0 0 9px;color:var(--navy);font-size:18px}.feature p{color:var(--muted);font-size:14px;line-height:1.65;min-height:46px}.text-link{color:var(--blue);font-size:13px;font-weight:800;display:inline-flex;gap:7px;align-items:center}
+.search-section{background:#edf4ff;border-top:1px solid #e3edfc;border-bottom:1px solid #e3edfc}.search-wrap{max-width:1180px;margin:auto;padding:70px 24px}.search-panel{background:#fff;border:1px solid #e0e9f5;border-radius:22px;padding:28px;box-shadow:var(--shadow)}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:23px}.tab{border:1px solid #dfe8f5;background:#fff;color:#53647d;padding:10px 15px;border-radius:10px;font-weight:700;font-size:13px}.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}.search-form{display:grid;grid-template-columns:1.1fr 1fr auto;gap:13px;align-items:end}.field label{display:block;font-size:12px;font-weight:800;color:#53647d;margin:0 0 8px}.field input,.field select{width:100%;border:1px solid #dce5f1;border-radius:10px;padding:13px 12px;background:#fbfdff;outline:none;color:#293b58}.field input:focus,.field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #1769e014}.search-message{margin-top:18px;padding:14px 16px;border-radius:11px;background:#f3f7fd;color:#64748b;font-size:13px;line-height:1.6}.results{margin-top:18px;display:grid;gap:12px}.result-card{border:1px solid var(--line);border-radius:13px;padding:17px;display:flex;justify-content:space-between;gap:12px;align-items:center}.result-card h4{margin:0 0 6px;color:var(--navy)}.result-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}.tag{background:#e2f8f1;color:#0b8777;padding:6px 9px;border-radius:20px;font-size:11px;font-weight:800;white-space:nowrap}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.step{text-align:center;padding:20px}.step-no{width:48px;height:48px;border-radius:15px;background:#e5efff;color:var(--blue);display:grid;place-items:center;font-weight:900;font-size:18px;margin:0 auto 17px}.step h3{color:var(--navy);font-size:17px}.step p{color:var(--muted);font-size:14px;line-height:1.7}
+.cta{max-width:1132px;margin:0 auto 70px;padding:38px;background:linear-gradient(115deg,#12356d,#1769e0);border-radius:22px;color:white;display:flex;align-items:center;justify-content:space-between;gap:25px}.cta h2{font-size:28px;margin:0 0 9px}.cta p{margin:0;color:#d9e7ff;line-height:1.6}.cta .btn{background:#fff;color:var(--navy);white-space:nowrap}
+footer{background:#0c2042;color:#d7e4f7;padding:32px 24px}.footer-inner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:22px;align-items:center}.footer-brand{font-weight:800;font-size:18px}.footer-inner p{font-size:12px;color:#a9bad4;margin:7px 0 0}.disclaimer{font-size:11px;color:#a9bad4;max-width:450px;line-height:1.6;text-align:right}
+@media(max-width:800px){.navlinks{display:none}.hero-inner{grid-template-columns:1fr;padding-top:48px;gap:20px}.hero-art{min-height:330px}.stats{grid-template-columns:1fr;gap:10px;margin-top:18px}.feature-grid,.how-grid{grid-template-columns:1fr}.search-form{grid-template-columns:1fr}.cta{margin:0 18px 45px;display:block;padding:28px}.cta .btn{margin-top:20px}.footer-inner{display:block}.disclaimer{text-align:left;margin-top:18px}.section,.search-wrap{padding-top:52px;padding-bottom:52px}}
+@media(max-width:480px){.nav{padding:12px 16px}.hero-inner{padding-left:18px;padding-right:18px}h1{letter-spacing:-1.3px}.medical-card{padding:18px}.bubble-one{right:-3px}.bubble-two{left:-3px}.search-panel{padding:18px}.section{padding-left:18px;padding-right:18px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="#home" aria-label="PSS LifeLink home"><span class="logo">✚</span><span>PSS LifeLink<small>Patient Safety System</small></span></a>
+    <div class="navlinks"><a href="#services">Services</a><a href="#search">Find Resources</a><a href="#how">How It Works</a></div>
+    <a class="nav-cta" href="#search">Find Resources&nbsp; ↗</a>
+  </nav>
+</header>
+<main>
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> CONNECTING CARE, SAVING LIVES</span>
+      <h1>Find care when<br>it matters <span>most.</span></h1>
+      <p>A simple way to discover hospitals and check organ and blood resource information. Find the right information, connect with care, and take the next step with confidence.</p>
+      <div class="hero-actions"><a class="btn btn-primary" href="#search">Search Resources <span>→</span></a><a class="btn btn-secondary" href="#services">Explore Services</a></div>
+      <div class="hero-note"><span>✓ <strong>Easy to use</strong></span><span>✓ <strong>Hospital information</strong></span><span>✓ <strong>Resource search</strong></span></div>
+    </div>
+    <div class="hero-art" aria-label="Resource dashboard illustration">
+      <div class="orb"></div>
+      <div class="float-bubble bubble-one"><strong>One place</strong>For resource information</div>
+      <div class="medical-card">
+        <div class="card-head"><h3>Resource overview</h3><span class="status">● Connected care</span></div>
+        <div class="resource-row"><div class="res-icon">🏥</div><div class="res-copy"><b>Hospital Directory</b><span>Hospital details and contacts</span></div><span class="res-arrow">›</span></div>
+        <div class="resource-row"><div class="res-icon teal">🫀</div><div class="res-copy"><b>Organ Resources</b><span>Search resource availability</span></div><span class="res-arrow">›</span></div>
+        <div class="resource-row"><div class="res-icon purple">🩸</div><div class="res-copy"><b>Blood Bank</b><span>Blood group information</span></div><span class="res-arrow">›</span></div>
+      </div>
+      <div class="float-bubble bubble-two"><strong>Care starts here</strong>Clear • Simple • Accessible</div>
+    </div>
+  </div>
+</section>
+<div class="stats">
+  <div class="stat"><div class="stat-icon">🏥</div><div><strong>Hospital Finder</strong><span>Search by city or Hospital ID</span></div></div>
+  <div class="stat"><div class="stat-icon">🫀</div><div><strong>Organ Resources</strong><span>Check listed availability</span></div></div>
+  <div class="stat"><div class="stat-icon">🩸</div><div><strong>Blood Group Search</strong><span>Explore blood bank records</span></div></div>
+</div>
+<section class="section" id="services">
+  <div class="section-top"><span class="eyebrow"><span class="dot"></span> OUR SERVICES</span><h2>Healthcare information, made simpler</h2><p>Explore the main tools designed to help you find hospital and resource information without unnecessary complexity.</p></div>
+  <div class="feature-grid">
+    <article class="feature"><div class="feature-icon">🏥</div><h3>Find a Hospital</h3><p>Search hospitals by city first, or switch to Hospital ID for a direct lookup.</p><a class="text-link" href="#search" data-tab="hospital">Search hospitals <span>→</span></a></article>
+    <article class="feature"><div class="feature-icon">🫀</div><h3>Search Organ Resources</h3><p>Search listed organ records and review their displayed status and hospital details.</p><a class="text-link" href="#search" data-tab="organ">Explore organs <span>→</span></a></article>
+    <article class="feature"><div class="feature-icon">🩸</div><h3>Blood Bank Information</h3><p>Choose a blood group to look up related blood bank information.</p><a class="text-link" href="#search" data-tab="blood">Search blood groups <span>→</span></a></article>
+  </div>
+</section>
+<section class="search-section" id="search">
+  <div class="search-wrap">
+    <div class="section-top"><span class="eyebrow"><span class="dot"></span> RESOURCE SEARCH</span><h2>What are you looking for?</h2><p>Search the connected MySQL directory through the C++ backend.</p></div>
+    <div class="search-panel">
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-mode="city" role="tab">🏥 Hospital Search</button>
+        <button class="tab" data-mode="organ" role="tab">🫀 Organ</button>
+        <button class="tab" data-mode="blood" role="tab">🩸 Blood Group</button>
+      </div>
+      <div class="tabs hospital-options" id="hospitalOptions" aria-label="Hospital search method">
+        <button class="tab active" data-hospital-method="city" type="button">📍 Search by City</button>
+        <button class="tab" data-hospital-method="hospital" type="button">🔎 Search by Hospital ID</button>
+      </div>
+      <form id="searchForm">
+        <div class="search-form" id="formFields">
+          <div class="field"><label for="searchValue">HOSPITAL ID</label><input id="searchValue" placeholder="e.g. 101" autocomplete="off" required></div>
+          <div class="field"><label for="extraValue">OPTIONAL FILTER</label><input id="extraValue" placeholder="Optional"></div>
+          <button class="btn btn-primary" type="submit">Search <span>→</span></button>
+        </div>
+      </form>
+      <div class="search-message" id="message" role="status">Ready to search. Start the C++ backend server and keep it running to load live database results.</div>
+      <div class="results" id="results" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+<section class="section" id="how">
+  <div class="section-top"><span class="eyebrow"><span class="dot"></span> HOW IT WORKS</span><h2>Three simple steps</h2><p>The goal is to make important directory information easy to navigate.</p></div>
+  <div class="how-grid">
+    <div class="step"><div class="step-no">01</div><h3>Choose a category</h3><p>Select hospital, city, organ, or blood group from the search options.</p></div>
+    <div class="step"><div class="step-no">02</div><h3>Enter search details</h3><p>Provide an ID or choose the resource you want to look up.</p></div>
+    <div class="step"><div class="step-no">03</div><h3>Review information</h3><p>Once connected to the backend, matching records will appear here.</p></div>
+  </div>
+</section>
+<section class="cta"><div><h2>Better access to information starts here.</h2><p>PSS LifeLink brings hospital and resource discovery into one clear interface.</p></div><a class="btn" href="#search">Start a Search&nbsp; →</a></section>
+</main>
+<footer><div class="footer-inner"><div><div class="footer-brand">✚ PSS LifeLink</div><p>Care • Connect • Save</p></div><div class="disclaimer">Educational project prototype. Resource information must be verified with the relevant hospital or authorized service. This demo does not confirm real-time availability or provide medical advice.</div></div></footer>
+<script>
+const modes={
+ hospital:{label:'HOSPITAL ID',placeholder:'e.g. 101',type:'text',extraLabel:'OPTIONAL FILTER',extraPlaceholder:'Optional'},
+ city:{label:'CITY',placeholder:'e.g. Bilaspur',type:'text',extraLabel:'OPTIONAL FILTER',extraPlaceholder:'Optional'},
+ organ:{label:'ORGAN NAME',placeholder:'e.g. Kidney',type:'text',extraLabel:'CITY (OPTIONAL)',extraPlaceholder:'e.g. Bilaspur'},
+ blood:{label:'BLOOD GROUP',placeholder:'e.g. O+',type:'text',extraLabel:'CITY (OPTIONAL)',extraPlaceholder:'e.g. Raipur'}
+};
+let currentMode='city';
+const tabs=[...document.querySelectorAll('[data-mode]')], methodTabs=[...document.querySelectorAll('[data-hospital-method]')], hospitalOptions=document.querySelector('#hospitalOptions'), searchValue=document.querySelector('#searchValue'), extraValue=document.querySelector('#extraValue'), fields=document.querySelector('#formFields'), message=document.querySelector('#message'), results=document.querySelector('#results');
+function setMode(mode){currentMode=mode;tabs.forEach(t=>t.classList.toggle('active',t.dataset.mode===mode || (t.dataset.mode==='city' && mode==='hospital')));hospitalOptions.style.display=(mode==='city'||mode==='hospital')?'flex':'none';methodTabs.forEach(t=>t.classList.toggle('active',t.dataset.hospitalMethod===mode || (mode==='city' && t.dataset.hospitalMethod==='city')));const m=modes[mode];fields.querySelector('label').textContent=m.label;searchValue.placeholder=m.placeholder;searchValue.value='';fields.querySelectorAll('.field')[1].querySelector('label').textContent=m.extraLabel;extraValue.placeholder=m.extraPlaceholder;extraValue.value='';message.textContent='Ready to search. Start the C++ backend server and keep it running to load live database results.';results.innerHTML='';}
+tabs.forEach(t=>t.addEventListener('click',()=>setMode(t.dataset.mode)));
+methodTabs.forEach(t=>t.addEventListener('click',()=>setMode(t.dataset.hospitalMethod)));
+setMode('city');
+document.querySelectorAll('[data-tab]').forEach(a=>a.addEventListener('click',()=>setMode(a.dataset.tab)));
+document.querySelector('#searchForm').addEventListener('submit',async e=>{
+ e.preventDefault(); const q=searchValue.value.trim(), filter=extraValue.value.trim();
+ if(!q){message.textContent='Please enter a search value.';return;}
+ if(currentMode==='hospital'&&!/^\d+$/.test(q)){message.textContent='Please enter a numeric Hospital ID, for example 101.';return;}
+ const type=currentMode==='city'?'city':currentMode;
+ const params=new URLSearchParams({type:type,q:q});
+ if(type==='organ'||type==='blood') params.set('city',filter);
+ message.textContent='Searching the PSS LifeLink database…'; results.innerHTML='';
+ try {
+  const res=await fetch('/api/search?'+params.toString()); const data=await res.json();
+  if(!res.ok||!data.ok) throw new Error(data.message||'The server could not complete the search.');
+  if(!data.results.length){message.textContent='No matching records found. Try another city, Hospital ID, organ, or blood group.';return;}
+  message.textContent=data.count+' matching record(s) found. Please call the listed hospital to verify current availability.';
+  results.innerHTML=data.results.map(r=>{
+   const resource=r.resource_type!=='Hospital' && r.resource_name ? `<p><strong>${escapeHtml(r.resource_type)}:</strong> ${escapeHtml(r.resource_name)}${r.blood_group?' · Blood group: '+escapeHtml(r.blood_group):''}${r.resource_type==='Blood Bank'?' · Units listed: '+r.quantity:' · Quantity: '+r.quantity} · <strong>${escapeHtml(r.status)}</strong></p>`:'';
+   return `<article class="result-card"><div><h4>${escapeHtml(r.hospital_name)} <span style="font-size:12px;color:#64748b">(#${r.hospital_ID})</span></h4><p><strong>${escapeHtml(r.city)}</strong> · ${escapeHtml(r.address)}<br>Phone: ${escapeHtml(r.phone||'Not listed')} · Email: ${escapeHtml(r.email||'Not listed')}<br>Authorization: ${escapeHtml(r.authorization_status||'Not listed')}</p>${resource}</div><span class="tag">${escapeHtml(r.status||'DIRECTORY')}</span></article>`;
+  }).join('');
+ } catch(err) { message.textContent='Could not connect to the C++ backend. Make sure server.exe is running and MySQL is started. Details: '+err.message; }
+});
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+</script>
+</body>
+</html>
