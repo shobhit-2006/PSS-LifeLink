@@ -1,0 +1,635 @@
+#include <iostream>
+#include <string>
+#include <memory>
+#include <algorithm>
+#include <cctype>
+#include <mysql_driver.h>
+#include <mysql_connection.h>
+#include <cppconn/prepared_statement.h>
+#include <cppconn/resultset.h>
+#include <cppconn/exception.h>
+
+using namespace std;
+
+string toLower(string text)
+{
+    transform(text.begin(), text.end(), text.begin(),
+        [](unsigned char ch)
+        {
+            return tolower(ch);
+        });
+
+    return text;
+}
+
+
+// BASE CLASS: Inheritance + Polymorphism
+class HospitalResource
+{
+public:
+    virtual void display() const = 0;
+
+    virtual ~HospitalResource() = default;
+};
+
+// DERIVED CLASS: Organ
+class Organ : public HospitalResource
+{
+private:
+    string name, bloodGroup, status;
+    int quantity;
+
+public:
+    Organ(string n, string b, int q, string s)
+        : name(n), bloodGroup(b), quantity(q), status(s) {
+    }
+
+    void display() const override
+    {
+        cout << "\nResource Type: Organ\n";
+        cout << "Organ: " << name << endl;
+        cout << "Blood Group: " << bloodGroup << endl;
+        cout << "Quantity: " << quantity << endl;
+        cout << "Status: " << status << endl;
+    }
+};
+
+// DERIVED CLASS: BloodBank
+class BloodBank : public HospitalResource
+{
+private:
+    string bloodGroup;
+    int units;
+
+public:
+    BloodBank(string b, int u)
+        : bloodGroup(b), units(u) {
+    }
+
+    void display() const override
+    {
+        cout << "\nResource Type: Blood Bank\n";
+        cout << "Blood Group: " << bloodGroup << endl;
+        cout << "Units Available: " << units << endl;
+    }
+};
+
+// HOSPITAL CLASS: Class, Object and Functions
+class Hospital
+{
+private:
+    int id;
+    string name, city, address, authorization, phone, email;
+
+public:
+    Hospital(int i, string n, string c, string a,
+        string auth, string p, string e)
+        : id(i), name(n), city(c), address(a),
+        authorization(auth), phone(p), email(e) {
+    }
+
+    void showDetails() const
+    {
+        cout << "\n===== HOSPITAL DETAILS =====\n";
+        cout << "Hospital ID: " << id << endl;
+        cout << "Name: " << name << endl;
+        cout << "City: " << city << endl;
+        cout << "Address: " << address << endl;
+        cout << "Authorization: " << authorization << endl;
+        cout << "Phone: " << phone << endl;
+        cout << "Email: " << email << endl;
+    }
+};
+
+// DATABASE CLASS
+class DatabaseManager
+{
+private:
+    unique_ptr<sql::Connection> con;
+
+    template <typename Callback>
+    void runProcedure(
+        const string& procedure,
+        const string& value,
+        Callback callback)
+    {
+        unique_ptr<sql::PreparedStatement> stmt(
+            con->prepareStatement(procedure)
+        );
+
+        stmt->setString(1, value);
+
+        unique_ptr<sql::ResultSet> rs(
+            stmt->executeQuery()
+        );
+
+        callback(rs.get());
+
+        rs.reset();
+
+        while (stmt->getMoreResults())
+        {
+            unique_ptr<sql::ResultSet> extra(
+                stmt->getResultSet()
+            );
+        }
+    }
+
+
+public:
+    DatabaseManager()
+    {
+        sql::mysql::MySQL_Driver* driver =
+            sql::mysql::get_mysql_driver_instance();
+        con.reset(
+            driver->connect(
+                "tcp://127.0.0.1:3306",
+                "root",
+                "Shobhit#26"
+            )
+        );
+
+        con->setSchema("PSS_LifeLink");
+    }
+
+
+    // FUNCTION OVERLOADING
+    // Search by Hospital ID
+    void search(int hospitalID)
+    {
+        sql::PreparedStatement* stmt = nullptr;
+        sql::ResultSet* rs = nullptr;
+
+        try
+        {
+            stmt = con->prepareStatement(
+                "CALL SearchHospitalByID(?)"
+            );
+
+            stmt->setInt(1, hospitalID);
+            rs = stmt->executeQuery();
+
+            bool found = false;
+
+            while (rs->next())
+            {
+                if (!found)
+                {
+                    cout << "\n========== HOSPITAL DETAILS ==========\n";
+                    cout << "Hospital ID: "
+                        << rs->getInt("hospital_ID") << endl;
+
+                    cout << "Hospital Name: "
+                        << rs->getString("hospital_name") << endl;
+
+                    cout << "City: "
+                        << rs->getString("city") << endl;
+
+                    cout << "Address: "
+                        << rs->getString("address") << endl;
+
+                    cout << "Phone: "
+                        << rs->getString("hospital_phone") << endl;
+
+                    cout << "Email: "
+                        << rs->getString("hospital_email") << endl;
+
+                    cout << "Authorization Status: "
+                        << rs->getString("authorization_status") << endl;
+
+                    cout << "\n========== ORGAN & BLOOD DETAILS ==========\n";
+
+                    found = true;
+                }
+
+                string itemType = rs->getString("item_type");
+
+                if (itemType == "Organ")
+                {
+                    cout << "\nType: Organ" << endl;
+
+                    cout << "Organ Name: "
+                        << rs->getString("item_name") << endl;
+
+                    cout << "Blood Group: "
+                        << rs->getString("blood_group") << endl;
+
+                    cout << "Quantity: "
+                        << rs->getInt("available_amount") << endl;
+
+                    cout << "Availability: "
+                        << rs->getString("current_status") << endl;
+                }
+                else if (itemType == "Blood")
+                {
+                    cout << "\nType: Blood Bank" << endl;
+
+                    cout << "Blood Group: "
+                        << rs->getString("item_name") << endl;
+
+                    cout << "Units Available: "
+                        << rs->getInt("available_amount") << endl;
+
+                    cout << "Status: "
+                        << rs->getString("current_status") << endl;
+                }
+
+                cout << "----------------------------------------\n";
+            }
+
+            if (!found)
+            {
+                cout << "Hospital ID not found or no linked records found.\n";
+            }
+
+            delete rs;
+            rs = nullptr;
+
+            delete stmt;
+            stmt = nullptr;
+        }
+        catch (sql::SQLException& e)
+        {
+            delete rs;
+            delete stmt;
+
+            cout << "Database Error: " << e.what() << endl;
+        }
+    }
+
+
+
+    // FUNCTION OVERLOADING
+    // Search hospitals by city
+    void search(const string& city)
+    {
+        sql::PreparedStatement* stmt = nullptr;
+        sql::ResultSet* rs = nullptr;
+
+        try
+        {
+            stmt = con->prepareStatement(
+                "CALL SearchByCity(?)"
+            );
+
+            stmt->setString(1, city);
+            rs = stmt->executeQuery();
+
+            bool found = false;
+            int previousHospitalID = -1;
+
+            while (rs->next())
+            {
+                int currentHospitalID =
+                    rs->getInt("hospital_ID");
+
+                // Print hospital details only once
+                if (currentHospitalID != previousHospitalID)
+                {
+                    if (found)
+                    {
+                        cout << "\n========================================\n";
+                    }
+
+                    cout << "\n========== HOSPITAL DETAILS ==========\n";
+
+                    cout << "Hospital ID: "
+                        << currentHospitalID << endl;
+
+                    cout << "Hospital Name: "
+                        << rs->getString("hospital_name") << endl;
+
+                    cout << "City: "
+                        << rs->getString("city") << endl;
+
+                    cout << "Address: "
+                        << rs->getString("address") << endl;
+
+                    cout << "Phone: "
+                        << rs->getString("hospital_phone") << endl;
+
+                    cout << "Email: "
+                        << rs->getString("hospital_email") << endl;
+
+                    cout << "Authorization Status: "
+                        << rs->getString("authorization_status") << endl;
+
+                    cout << "\n========== BLOOD BANK DETAILS ==========\n";
+
+                    previousHospitalID = currentHospitalID;
+                    found = true;
+                }
+
+                string itemType = rs->getString("item_type");
+
+                if (itemType == "Blood")
+                {
+                    cout << "\nBlood Group: "
+                        << rs->getString("item_name") << endl;
+
+                    cout << "Units Available: "
+                        << rs->getInt("available_amount") << endl;
+
+                    cout << "Status: "
+                        << rs->getString("current_status") << endl;
+                }
+                else if (itemType == "Organ")
+                {
+                    cout << "\n========== ORGAN DETAILS ==========\n";
+
+                    cout << "Organ Name: "
+                        << rs->getString("item_name") << endl;
+
+                    cout << "Blood Group: "
+                        << rs->getString("blood_group") << endl;
+
+                    cout << "Quantity: "
+                        << rs->getInt("available_amount") << endl;
+
+                    cout << "Availability: "
+                        << rs->getString("current_status") << endl;
+                }
+
+                cout << "----------------------------------------\n";
+            }
+
+            if (!found)
+            {
+                cout << "No records found for this city.\n";
+            }
+
+            delete rs;
+            rs = nullptr;
+
+            delete stmt;
+            stmt = nullptr;
+        }
+        catch (sql::SQLException& e)
+        {
+            delete rs;
+            delete stmt;
+
+            cout << "Database Error: "
+                << e.what() << endl;
+        }
+    }
+
+
+    void searchOrgan(const string& organName)
+    {
+        runProcedure(
+            "CALL SearchOrgan(?)", organName,
+            [](sql::ResultSet* rs)
+            {
+                bool found = false;
+
+                while (rs->next())
+                {
+                    found = true;
+
+                    // Create Organ object using runtime polymorphism
+                    unique_ptr<HospitalResource> resource =
+                        make_unique<Organ>(
+                            rs->getString("organ_name"),
+                            rs->getString("blood_group"),
+                            rs->getInt("quantity"),
+                            rs->getString("availability_status")
+                        );
+
+                    // Display hospital details
+                    cout << "\n========== HOSPITAL DETAILS ==========\n";
+
+                    cout << "Hospital ID: "
+                        << rs->getInt("hospital_ID") << endl;
+
+                    cout << "Hospital Name: "
+                        << rs->getString("hospital_name") << endl;
+
+                    cout << "City: "
+                        << rs->getString("city") << endl;
+
+                    cout << "Address: "
+                        << rs->getString("address") << endl;
+
+                    cout << "Phone: "
+                        << rs->getString("phone") << endl;
+
+                    cout << "Email: "
+                        << rs->getString("email") << endl;
+
+                    // Display organ details
+                    cout << "\n========== ORGAN DETAILS ==========\n";
+                    resource->display();
+
+                    cout << "====================================\n";
+                }
+
+                if (!found)
+                {
+                    cout << "No available organs found.\n";
+                }
+            }
+        );
+    }
+
+
+    void searchBloodGroup(const string& group)
+    {
+        runProcedure(
+            "CALL SearchBloodGroup(?)",
+            group,
+            [](sql::ResultSet* rs)
+            {
+                bool found = false;
+
+                while (rs->next())
+                {
+                    found = true;
+
+                    unique_ptr<HospitalResource> resource =
+                        make_unique<BloodBank>(
+                            rs->getString("blood_group"),
+                            rs->getInt("units_available")
+                        );
+
+                    cout << "\n========== HOSPITAL DETAILS ==========\n";
+                    cout << "Hospital ID: "
+                        << rs->getInt("hospital_ID") << endl;
+                    cout << "Hospital Name: "
+                        << rs->getString("hospital_name") << endl;
+                    cout << "City: "
+                        << rs->getString("city") << endl;
+                    cout << "Address: "
+                        << rs->getString("address") << endl;
+                    cout << "Phone: "
+                        << rs->getString("phone") << endl;
+                    cout << "Email: "
+                        << rs->getString("email") << endl;
+
+                    cout << "\n========== BLOOD BANK DETAILS ==========\n";
+                    resource->display();
+                    cout << "========================================\n";
+                }
+
+                if (!found)
+                {
+                    cout << "No blood stock found for this group.\n";
+                }
+            }
+        );
+    }
+
+};
+
+int main()
+{
+    try
+    {
+        DatabaseManager db;
+
+        int choice;
+
+        do
+        {
+            cout << "\n===== PSS LIFELINK =====\n";
+            cout << "1. Search Hospital by ID\n";
+            cout << "2. Search Hospital by City\n";
+            cout << "3. Search Available Organ\n";
+            cout << "4. Search Blood Group\n";
+            cout << "0. Exit\n";
+            cout << "Enter choice: ";
+            cin >> choice;
+
+            if (choice == 1)
+            {
+                int id;
+                cout << "Enter Hospital ID (100-130): ";
+                cin >> id;
+
+                if (id >= 100 && id <= 130)
+                {
+                    db.search(id);
+                }
+                else
+                {
+                    cout << "Invalid ID! Enter between 100 and 130.\n";
+                }
+            }
+
+            else if (choice == 2)
+            {
+                string city;
+
+                cout << "\nAvailable Cities:\n";
+                cout << "1. Raipur\n";
+                cout << "2. Bilaspur\n";
+                cout << "3. Raigarh\n";
+                cout << "4. Bhilai\n";
+                cout << "5. Durg\n";
+                cout << "6. Korba\n";
+
+                cout << "\nEnter City Name: ";
+                getline(cin >> ws, city);
+
+                string originalCity = city;
+                    city = toLower(city);
+
+                if (city == "raipur" || city == "bilaspur" ||
+                    city == "raigarh" || city == "bhilai" ||
+                    city == "durg" || city == "korba")
+                {
+                    db.search(originalCity);
+                }
+                else
+                {
+                    cout << "Invalid City! Select from the list.\n";
+                }
+                
+            }
+
+            else if (choice == 3)
+            {
+                string organ;
+
+                cout << "\nAvailable Organs:\n";
+                cout << "1. Liver\n";
+                cout << "2. Lungs\n";
+                cout << "3. Heart\n";
+                cout << "4. Kidney\n";
+                cout << "5. Pancreas\n";
+                cout << "6. Cornea\n";
+
+                cout << "\nEnter Organ Name: ";
+                getline(cin >> ws, organ);
+
+                string originalorgan = organ;
+                organ = toLower(organ);
+
+                if (organ == "liver" ||
+                    organ == "lungs" ||
+                    organ == "heart" ||
+                    organ == "kidney" ||
+                    organ == "pancreas" ||
+                    organ == "cornea")
+                {
+                    db.searchOrgan(organ);
+                }
+                else
+                {
+                    cout << "Invalid Organ! Select from the list.\n";
+                }
+            }
+
+            else if (choice == 4)
+            {
+                string group;
+
+                cout << "\nAvailable Blood Groups:\n";
+                cout << "1. A+\n";
+                cout << "2. B+\n";
+                cout << "3. AB+\n";
+                cout << "4. O+\n";
+                cout << "5. O-\n";
+
+                cout << "\nEnter Blood Group: ";
+                getline(cin >> ws, group);
+
+                group = toLower(group);
+
+                if (group == "a+" ||
+                    group == "b+" ||
+                    group == "ab+" ||
+                    group == "o+" ||
+                    group == "o-")
+                {
+                    db.searchBloodGroup(group);
+                }
+                else
+                {
+                    cout << "Invalid Blood Group! Select from the list.\n";
+                }
+            }
+
+            else if (choice == 0)
+            {
+                cout << "Thank you for using PSS LifeLink!\n";
+            }
+
+            else
+            {
+                cout << "Invalid choice!\n";
+            }
+
+        } while (choice != 0);
+    }
+    catch (sql::SQLException& e)
+    {
+        cout << "Database Error: " << e.what() << endl;
+    }
+    catch (const exception& e)
+    {
+        cout << "Error: " << e.what() << endl;
+    }
+
+    return 0;
+}
