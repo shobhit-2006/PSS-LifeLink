@@ -145,7 +145,7 @@ public:
             driver->connect(
                 "tcp://127.0.0.1:3306",
                 "root",
-                "Shobhit#26"
+                "MYSQLPASSWORD"
             )
         );
 
