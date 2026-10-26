@@ -70,7 +70,6 @@ Users can search using a Hospital ID and view the corresponding hospital informa
 4. Platforms & Deployment Tools
 
 - GitHub | Used for source code hosting and version control.
-- Docker | Used to package the application and its dependencies into containers for deployment.
 - Render | A cloud platform used to host web applications and backend services.
 - Aiven  | A cloud platform that provides managed MySQL database hosting.
 
