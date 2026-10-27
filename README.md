@@ -36,7 +36,7 @@ Users can search using a Hospital ID and view the corresponding hospital informa
 🏥 Hospital Information
 
 - Search for hospitals using Hospital ID.
-- View hospital name, city, address, phone number and email.
+- View hospital Name, City, Address, Phone number and email.
 
 🫀 Organ Availability
 
